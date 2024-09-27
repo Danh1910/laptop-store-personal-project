@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "556891398311",
+    "project_id": "laptop-project-ea4fa",
+    "storage_bucket": "laptop-project-ea4fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556891398311:android:a755445d57a292912e7b82",
+        "android_client_info": {
+          "package_name": "com.example.new_laptop_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsH6fhIRkXxp1HfCMjKAFso7MKxhc4jXs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
