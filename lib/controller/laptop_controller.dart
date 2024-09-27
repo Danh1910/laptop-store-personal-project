@@ -23,6 +23,7 @@ class LaptopController {
     } catch (e) {
       print('Lỗi khi lấy danh sách laptop: $e');
       print("lỗi");
+
       return [];
     }
   }
