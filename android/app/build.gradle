@@ -6,7 +6,7 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-apply plugins: 'com.google.gms.google.services'
+//apply plugins: 'com.google.gms.google.services'
 
 android {
     namespace = "com.example.new_laptop_project"

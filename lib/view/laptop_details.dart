@@ -6,11 +6,13 @@ class LaptopDetailsScreen extends StatelessWidget {
     required this.imagePath,
     required this.name,
     required this.price,
+    required this.brand
   });
 
   final String imagePath;
   final String name;
-  final String price;
+  final int price;
+  final String brand;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class LaptopDetailsScreen extends StatelessWidget {
           children: [
             Image.asset(imagePath),
             Text(name),
-            Text(price),
+            Text(price.toString()),
             // Hiển thị thêm thông tin chi tiết khác ở đây
           ],
         ),
