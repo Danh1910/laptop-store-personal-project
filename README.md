@@ -1,1 +1,0 @@
-# laptop-store-personal-project
