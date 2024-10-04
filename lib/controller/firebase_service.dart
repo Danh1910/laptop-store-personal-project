@@ -4,7 +4,7 @@ import '../model/laptop.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:io';
 
-class LaptopController {
+class firebasecontroll {
   final CollectionReference laptops = FirebaseFirestore.instance.collection('laptops');
 
   Future<void> createLaptop(Laptop laptop) async {try {

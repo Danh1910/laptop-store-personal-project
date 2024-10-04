@@ -24,7 +24,7 @@ class LaptopDetailsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imagePath),
+            Image.asset("assets/$imagePath"),
             Text(name),
             Text(price.toString()),
             // Hiển thị thêm thông tin chi tiết khác ở đây
