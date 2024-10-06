@@ -1,19 +1,19 @@
 import 'dart:io';
 
-import '../model/laptop.dart';
-import 'firebase_service.dart';
+import '../model/DTO/laptop_dto.dart';
+import '../model/service/laptop_service.dart';
 
 class lap_controll{
   void themlaptop(){
 
-    final laptopController = firebasecontroll();
-    final newLaptop = Laptop(name: 'Laptop Mới', brand: 'Brand A', price: 1500, image: "asus.png");
+    final laptopController = laptop_service();
+    final newLaptop = Laptop(name: 'Macbook Pro', brand: 'Apple', price: 12500, image: "macbook.jpg");
 
     laptopController.createLaptop(newLaptop);
   }
 
   void docdulieu(){
-    final laptopController = firebasecontroll();
+    final laptopController = laptop_service();
 
     laptopController.getLaptops().then((laptops) {
       for (final laptop in laptops) {
@@ -23,9 +23,17 @@ class lap_controll{
     });
   }
 
+  Future<List<Laptop>> get_laptop() async {
+    final laptopController = laptop_service();
+    List<Laptop> laptops = await laptopController.getLaptops();
+
+    return laptops;
+
+  }
+
   void uploadanh(){
     String imagePath = 'asus_rog.png';
-    final laptopController = firebasecontroll();
+    final laptopController = laptop_service();
 // Tạo đối tượng File từ đường dẫn
     File imageFile = File(imagePath);
 
@@ -37,7 +45,7 @@ class lap_controll{
 
   Future<String> getImageUrl(String imageName) async {
     try {
-      final laptopController = firebasecontroll();
+      final laptopController = laptop_service();
       String imageUrl = await laptopController.getDownloadURL(imageName);
       if (imageUrl.isNotEmpty) {
         return imageUrl;

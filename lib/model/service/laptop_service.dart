@@ -1,18 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../model/laptop.dart';
+import '../DTO/laptop_dto.dart';
+
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:io';
 
-class firebasecontroll {
+class laptop_service {
   final CollectionReference laptops = FirebaseFirestore.instance.collection('laptops');
 
-  Future<void> createLaptop(Laptop laptop) async {try {
-    await laptops.add(laptop.toMap());
-    print('Laptop đã được thêm vào Firestore thành công!'); // Dòng print mới
-  } catch (e) {
-    print('Lỗi khi tạo laptop: $e');
-  }
+  Future<void> createLaptop(Laptop laptop) async {
+    try {
+      await laptops.add(laptop.toMap());
+      print('Laptop đã được thêm vào Firestore thành công!'); // Dòng print mới
+    } catch (e) {
+      print('Lỗi khi tạo laptop: $e');
+    }
   }
 
   Future<List<Laptop>> getLaptops() async {
@@ -30,16 +32,14 @@ class firebasecontroll {
 
   Future<void> uploadImage(File imageFile) async {
     try {
-      // Khởi tạo Firebase Storage
+
       firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
 
-      // Tạo tham chiếu đến vị trí lưu trữ
       firebase_storage.Reference ref = storage.ref().child('${DateTime.now().toString()}'); // Sử dụng timestamp để tạo tên file duy nhất
 
-      // Tải ảnh lên
       firebase_storage.UploadTask uploadTask = ref.putFile(imageFile);
 
-      // Theo dõi tiến độ (tùy chọn)
+
       uploadTask.snapshotEvents.listen((firebase_storage.TaskSnapshot snapshot) {
         print('Uploaded ${snapshot.bytesTransferred}/${snapshot.totalBytes}');
       });

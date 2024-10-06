@@ -6,7 +6,16 @@ class Laptop {
   final String image;
   String? imageUrl;
 
-  Laptop({this.id, required this.name, required this.brand, required this.price, required this.image, this.imageUrl,});
+  Laptop(
+      {
+        this.id,
+        required this.name,
+        required this.brand,
+        required this.price,
+        required this.image,
+        this.imageUrl,
+      }
+      );
 
   // Chuyển đổi object Laptop thành Map để lưu trữ trên Firestore
   Map<String, dynamic> toMap() {
@@ -29,4 +38,6 @@ class Laptop {
       imageUrl: map['imageUrl'] ?? ''
     );
   }
+
+
 }

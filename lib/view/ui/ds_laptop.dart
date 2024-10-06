@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-import '../../controller/firebase_service.dart';
+import '../../controller/cart_controll.dart';
+import '../../model/DTO/laptop_dto.dart';
+import '../../model/service/laptop_service.dart';
 import '../../controller/lap_controll.dart';
-import '../../model/laptop.dart';
+
 import '../item/laptop_item.dart';
 
 class DSLaptop extends StatefulWidget {
@@ -14,7 +18,7 @@ class DSLaptop extends StatefulWidget {
 class _DSLaptopState extends State<DSLaptop> {
 
   String? _imageUrl; // Biến state để lưu trữ URL ảnh
-  final lapct = new lap_controll();
+  final lapct = Get.put(lap_controll());
 
   List<Laptop> _laptops = [];
 
@@ -25,18 +29,6 @@ class _DSLaptopState extends State<DSLaptop> {
     print("init đã chạy.");
   }
 
-  Future<void> _docdulieu() async {
-    final laptopController = firebasecontroll();
-    List<Laptop> laptops = await laptopController.getLaptops();
-    setState(() {
-      _laptops = laptops;
-      for (var laptop in _laptops) {
-        _getImageForLaptop(laptop);
-      }
-    });
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -44,7 +36,7 @@ class _DSLaptopState extends State<DSLaptop> {
         child: SizedBox(height: 650, // Đặt chiều cao mong muốn
           child: Column(
             children: [
-              // TextButton(onPressed: lapct.themlaptop, child: Text("Thêm lap")),
+              TextButton(onPressed: lapct.themlaptop, child: Text("Thêm lap")),
               // TextButton(onPressed: lapct.docdulieu, child: Text("Đọc lap")),
               TextButton(onPressed: _docdulieu, child: Text("Đọc firebase")),
                   // TextButton(onPressed: () => getimage("msi.jpg"), child: Text("Lấy ảnh")),
@@ -100,6 +92,15 @@ class _DSLaptopState extends State<DSLaptop> {
     );
   }
 
+  Future<void> _docdulieu() async {
+    List<Laptop> laptops = await lapct.get_laptop();
+    setState(() {
+      _laptops = laptops;
+      for (var laptop in _laptops) {
+        _getImageForLaptop(laptop);
+      }
+    });
+  }
 
   Future<void> _getImageForLaptop(Laptop laptop) async {
     String imageUrl = await lapct.getImageUrl(laptop.image);
