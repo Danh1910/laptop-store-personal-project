@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:new_laptop_project/View/homeui.dart';
+import 'package:new_laptop_project/View/ui/homeui.dart';
 
 import 'package:new_laptop_project/main.dart';
 

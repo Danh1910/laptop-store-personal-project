@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/firebase_service.dart';
-import '../controller/lap_controll.dart';
-import '../model/laptop.dart';
-import 'laptop_item.dart';
+import '../../controller/firebase_service.dart';
+import '../../controller/lap_controll.dart';
+import '../../model/laptop.dart';
+import '../item/laptop_item.dart';
 
 class DSLaptop extends StatefulWidget {
   @override

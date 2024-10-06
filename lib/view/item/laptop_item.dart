@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'laptop_details.dart';
+import '../details/laptop_details.dart';
 
 class LaptopItem extends StatelessWidget{
 
