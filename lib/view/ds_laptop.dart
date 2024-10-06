@@ -16,30 +16,23 @@ class _DSLaptopState extends State<DSLaptop> {
   String? _imageUrl; // Biến state để lưu trữ URL ảnh
   final lapct = new lap_controll();
 
-  List<Laptop> _laptops = [
-    Laptop(
-        image: 'asus_rog.png',
-        brand: 'asus',
-        name: 'Asus Rog',
-        price: 20000000),
+  List<Laptop> _laptops = [];
 
-  ];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
-  //   print("init đã chạy.");
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
+    print("init đã chạy.");
+  }
 
   Future<void> _docdulieu() async {
     final laptopController = firebasecontroll();
-    int i = 0;
     List<Laptop> laptops = await laptopController.getLaptops();
     setState(() {
-      _laptops = laptops; // Cập nhật state với danh sách laptop
-      i++;
-      print("Có ${_laptops.length} laptop");
+      _laptops = laptops;
+      for (var laptop in _laptops) {
+        _getImageForLaptop(laptop);
+      }
     });
 
   }
@@ -51,11 +44,10 @@ class _DSLaptopState extends State<DSLaptop> {
         child: SizedBox(height: 650, // Đặt chiều cao mong muốn
           child: Column(
             children: [
-              TextButton(onPressed: lapct.themlaptop, child: Text("Thêm lap")),
+              // TextButton(onPressed: lapct.themlaptop, child: Text("Thêm lap")),
               // TextButton(onPressed: lapct.docdulieu, child: Text("Đọc lap")),
               TextButton(onPressed: _docdulieu, child: Text("Đọc firebase")),
-              // TextButton(
-              //     onPressed: () => getimage(this), child: Text("Lấy ảnh")),
+                  // TextButton(onPressed: () => getimage("msi.jpg"), child: Text("Lấy ảnh")),
               Expanded(
                 child: ListView.builder(
                   itemCount: (_laptops.length / 2).ceil(),
@@ -68,6 +60,7 @@ class _DSLaptopState extends State<DSLaptop> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center, // Canh giữa các item
                         children: [
+                          if (_imageUrl != null) Image.network(_imageUrl!),
                           if (firstIndex < _laptops.length)
                             Expanded(
                               child: Padding(
@@ -77,6 +70,7 @@ class _DSLaptopState extends State<DSLaptop> {
                                   brand: _laptops[firstIndex].brand,
                                   price: _laptops[firstIndex].price,
                                   image: _laptops[firstIndex].image,
+                                  imageUrl: _laptops[firstIndex].imageUrl,
                                 ),
                               ),
                             ),
@@ -88,7 +82,9 @@ class _DSLaptopState extends State<DSLaptop> {
                                   name: _laptops[secondIndex].name,
                                   brand: _laptops[secondIndex].brand,
                                   price: _laptops[secondIndex].price,
-                                  image: _laptops[secondIndex].image,),
+                                  image: _laptops[secondIndex].image,
+                                  imageUrl: _laptops[secondIndex].imageUrl,
+                                ),
                               ),
                             ),
                         ],
@@ -103,23 +99,17 @@ class _DSLaptopState extends State<DSLaptop> {
       ),
     );
   }
-}
 
-void getimage(_DSLaptopState state) async {
-  final laptopController = firebasecontroll();
-  try {
-    String imageUrl = await laptopController.getDownloadURL();
+
+  Future<void> _getImageForLaptop(Laptop laptop) async {
+    String imageUrl = await lapct.getImageUrl(laptop.image);
     if (imageUrl.isNotEmpty) {
-      print("Đã có link ảnh: $imageUrl");
-      // Hiển thị ảnh
-      state.setState(() {
-        // state.chuoividu = "ảnh msi";
-        state._imageUrl = imageUrl;
+      setState(() {
+        laptop.imageUrl = imageUrl;
       });
-    } else {
-      print("Chưa có link ảnh");
     }
-  } catch (e) {
-    print("Lỗi khi lấy link ảnh: $e");
   }
 }
+
+
+

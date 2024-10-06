@@ -4,8 +4,9 @@ class Laptop {
   final String brand;
   final int price;
   final String image;
+  String? imageUrl;
 
-  Laptop({this.id, required this.name, required this.brand, required this.price, required this.image});
+  Laptop({this.id, required this.name, required this.brand, required this.price, required this.image, this.imageUrl,});
 
   // Chuyển đổi object Laptop thành Map để lưu trữ trên Firestore
   Map<String, dynamic> toMap() {
@@ -13,7 +14,7 @@ class Laptop {
       'name': name,
       'brand': brand,
       'price': price,
-      'image' : image
+      'image' : image,
     };
   }
 
@@ -24,7 +25,8 @@ class Laptop {
       name: map['name'] ?? '',
       brand: map['brand'] ?? '',
       price: map['price']?.toInt() ?? 0.0,
-      image: map['image'] ?? ''
+      image: map['image'] ?? '',
+      imageUrl: map['imageUrl'] ?? ''
     );
   }
 }

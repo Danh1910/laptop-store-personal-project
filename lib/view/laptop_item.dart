@@ -6,18 +6,19 @@ import 'laptop_details.dart';
 class LaptopItem extends StatelessWidget{
 
   const LaptopItem({
-    super.key,
+    Key? key,
     required this.name,
     required this.brand,
     required this.price,
     required this.image,
-
-  });
+    this.imageUrl, // Thêm imageUrl vào constructor
+  }) : super(key: key);
 
   final String name;
   final String brand;
   final int price;
   final String image;
+  final String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +36,26 @@ class LaptopItem extends StatelessWidget{
       },
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              "assets/$image",
-              width: 180,
-              height: 180,
-              fit: BoxFit.cover,
+          if (imageUrl != null) // Kiểm tra nếu imageUrl khác null
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network( // Sử dụng Image.network để hiển thị ảnh từ URL
+                imageUrl!,
+                width: 180,
+                height: 180,
+                fit: BoxFit.cover,
+              ),
+            )
+          else
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset( // Sử dụng Image.asset nếu imageUrl là null
+                "assets/$image",
+                width:180,
+                height: 180,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
           Text(name),
           Text(price.toString()),
           ElevatedButton(

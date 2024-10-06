@@ -34,4 +34,21 @@ class lap_controll{
 // Gọi hàm uploadImage để tải ảnh lên Firebase Storage
     laptopController.uploadImage(imageFile);
   }
+
+  Future<String> getImageUrl(String imageName) async {
+    try {
+      final laptopController = firebasecontroll();
+      String imageUrl = await laptopController.getDownloadURL(imageName);
+      if (imageUrl.isNotEmpty) {
+        return imageUrl;
+      } else {
+        return ''; // Trả về chuỗi rỗng nếu không cóURL
+      }
+    } catch (e) {
+      print("Lỗi khi lấy link ảnh: $e");
+      return ''; // Trả về chuỗi rỗng nếu có lỗi
+    }
+  }
+
+
 }

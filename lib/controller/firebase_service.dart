@@ -55,16 +55,17 @@ class firebasecontroll {
     }
   }
 
-  Future<String> getDownloadURL() async {
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child('msi.jpg'); // Thay 'images/asus_rog.png' bằng đường dẫn đến ảnh của bạn
+  Future<String> getDownloadURL(String imagePath) async {
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child(imagePath);
     String downloadURL = await ref.getDownloadURL();
-    if (downloadURL == null) {
+    if (downloadURL.isEmpty) {
       print("Link ảnh null");
       throw Exception("Link ảnh null");
     } else {
       return downloadURL;
     }
-
   }
 
 }

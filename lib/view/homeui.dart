@@ -31,5 +31,5 @@ class MyApp extends StatelessWidget {
 
 
 
-// if (_imageUrl != null) Image.network(_imageUrl!),
+
 
