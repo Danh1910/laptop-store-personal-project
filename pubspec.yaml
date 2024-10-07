@@ -66,10 +66,10 @@ flutter:
 #    - assets/asus_rog.png
 #    - assets/msi.jpg
 #    - assets/asus.png
-#    - assets/hp.jpg
-#    - assets/lenovo.jpg
-#    - assets/macbook.jpg
-#    - assets/samsung.jpeg
+    - assets/hp.jpg
+    - assets/lenovo.jpg
+    - assets/macbook.jpg
+    - assets/samsung.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

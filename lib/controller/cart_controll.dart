@@ -19,7 +19,7 @@ class CartControll extends GetxController{
 
   void themcart(){
 
-    _cartService.addToCart("1", 1);
+    _cartService.addToCart("4", 1);
 
   }
 
