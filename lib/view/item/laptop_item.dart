@@ -1,23 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_laptop_project/model/DTO/laptop_dto.dart';
 
 import '../details/laptop_details.dart';
 
 class LaptopItem extends StatelessWidget{
 
+  final Laptop laptop;
+
   const LaptopItem({
     Key? key,
-    required this.name,
-    required this.brand,
-    required this.price,
-    required this.image,
-    this.imageUrl, // Thêm imageUrl vào constructor
+    this.imageUrl,
+    required this.laptop,
   }) : super(key: key);
 
-  final String name;
-  final String brand;
-  final int price;
-  final String image;
+
   final String? imageUrl;
 
   @override
@@ -28,8 +25,8 @@ class LaptopItem extends StatelessWidget{
           context,
           CupertinoPageRoute(
             builder: (context) => LaptopDetailsScreen(
-                imagePath: image,
-                name: name,price: price, brand: brand
+                imagePath: laptop.image,
+                laptop: laptop,
             ),
           ),
         );
@@ -50,20 +47,16 @@ class LaptopItem extends StatelessWidget{
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset( // Sử dụng Image.asset nếu imageUrl là null
-                "assets/$image",
+                "assets/${laptop.image}",
                 width:180,
                 height: 180,
                 fit: BoxFit.cover,
               ),
             ),
-          Text(name),
-          Text(price.toString()),
-          ElevatedButton(
-            onPressed: () {
-              // Xử lý sự kiện khi nút mua được nhấn
-            },
-            child: const Text('Mua'),
-          ),
+          Text(laptop.name),
+          Text(laptop.price.toString()),
+          Text(laptop.id)
+
         ],
       ),
     );

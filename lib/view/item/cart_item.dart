@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/DTO/cart_item_dto.dart';
+
 class CartItemUI extends StatelessWidget{
-  const CartItemUI({super.key});
+  const CartItemUI({super.key, required this.item});
+
+  final CartItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +31,11 @@ class CartItemUI extends StatelessWidget{
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Ten"),
+                    Text(item.laptop.name),
                     SizedBox(height: 16.0,),
-                    Text("Gia"),
+                    Text(item.laptop.price.toString()),
                     SizedBox(height: 16.0,),
-                    Text("So luong"),
+                    Text(item.quantity.toString()),
                   ],
                 ),
               ],

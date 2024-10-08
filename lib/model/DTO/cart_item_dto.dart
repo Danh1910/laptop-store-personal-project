@@ -1,21 +1,19 @@
+import 'package:new_laptop_project/model/DTO/laptop_dto.dart';
+
 class CartItem {
-  String laptopId;int quantity;
-  String name; // Optional
-  double price; // Optional
-  String? imageUrl; // Optional
+  int quantity;
+  Laptop laptop; // Laptop object
 
   CartItem({
-    required this.laptopId,
     required this.quantity,
-    this.name = '',
-    this.price = 0.0,
-    this.imageUrl,
+    required this.laptop, //Thêm Laptop vào constructor
   });
 
+  // Factory constructor to create a CartItem from a Map (optional)
   factory CartItem.fromMap(Map<String, dynamic> map) {
     return CartItem(
-      laptopId: map['laptopId'] ?? '',
       quantity: map['quantity']?.toInt() ?? 0,
+      laptop: Laptop.fromMap(map['laptopId'] ?? '', map['laptop'] ?? {}), // Tạo Laptop object từ map
     );
   }
 }

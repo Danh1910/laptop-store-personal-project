@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:new_laptop_project/controller/lap_controll.dart';
+import 'package:new_laptop_project/model/DTO/laptop_dto.dart';
+
+import '../../controller/cart_controll.dart';
 
 class LaptopDetailsScreen extends StatelessWidget {
-  const LaptopDetailsScreen({
+  LaptopDetailsScreen({
     super.key,
     required this.imagePath,
-    required this.name,
-    required this.price,
-    required this.brand
+    required this.laptop,
+
   });
 
   final String imagePath;
-  final String name;
-  final int price;
-  final String brand;
+  final Laptop laptop;
+
+  final cartController = Get.put(CartControll());
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +30,15 @@ class LaptopDetailsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("assets/$imagePath"),
-            Text(name),
-            Text(price.toString()),
-            // Hiển thị thêm thông tin chi tiết khác ở đây
+            Text("id sản phẩm: ${laptop.id}"),
+            Text(laptop.name),
+            Text(laptop.price.toString()),
+            ElevatedButton(
+              onPressed: () {
+
+              },
+              child: const Text('Mua'),
+            ),
           ],
         ),
       ),

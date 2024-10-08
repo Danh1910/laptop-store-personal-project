@@ -6,8 +6,19 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:new_laptop_project/controller/cart_controll.dart';
 import 'package:new_laptop_project/view/item/cart_item.dart';
 
+import '../../model/DTO/laptop_dto.dart';
+
 class CartView extends StatelessWidget {
   final cartController = Get.put(CartControll());
+
+  final laptop = Laptop(
+      id: '1',
+      name: 'Laptop A',
+      brand: 'Brand A',
+      price: 1000,
+      image: 'image.jpg',
+      imageUrl: 'image_url'
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +30,12 @@ class CartView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(onPressed: cartController.themcart, child: Text("Thêm Cart")),
+            TextButton(
+              onPressed: () { // Hàm anonymous
+                cartController.addItemToCart(laptop, 1); // Gọi addItemToCart
+              },
+              child: Text("Thêm Cart"),
+            ),
             TextButton(
                 onPressed: () => cartController.getCart(), child: Text("Đọc Cart")),
             Obx(() {
@@ -33,7 +49,7 @@ class CartView extends StatelessWidget {
                           itemCount: cartController.cart!.items.length,
                           itemBuilder: (context, index) {
                             final item = cartController.cart!.items[index];
-                            return CartItemUI(); // Hiển thị CartItem
+                            return CartItemUI(item: item); // Hiển thị CartItem
                           },
                         ),
                       ),

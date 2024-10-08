@@ -25,7 +25,7 @@ class _DSLaptopState extends State<DSLaptop> {
   @override
   void initState() {
     super.initState();
-    _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
+    // _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
     print("init đã chạy.");
   }
 
@@ -58,11 +58,9 @@ class _DSLaptopState extends State<DSLaptop> {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 4.0), // Padding giữa các item
                                 child: LaptopItem(
-                                  name: _laptops[firstIndex].name,
-                                  brand: _laptops[firstIndex].brand,
-                                  price: _laptops[firstIndex].price,
-                                  image: _laptops[firstIndex].image,
                                   imageUrl: _laptops[firstIndex].imageUrl,
+                                  laptop: _laptops[firstIndex],
+
                                 ),
                               ),
                             ),
@@ -71,11 +69,8 @@ class _DSLaptopState extends State<DSLaptop> {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 4.0), // Padding giữa các item
                                 child: LaptopItem(
-                                  name: _laptops[secondIndex].name,
-                                  brand: _laptops[secondIndex].brand,
-                                  price: _laptops[secondIndex].price,
-                                  image: _laptops[secondIndex].image,
                                   imageUrl: _laptops[secondIndex].imageUrl,
+                                  laptop: _laptops[secondIndex],
                                 ),
                               ),
                             ),
@@ -93,7 +88,7 @@ class _DSLaptopState extends State<DSLaptop> {
   }
 
   Future<void> _docdulieu() async {
-    List<Laptop> laptops = await lapct.get_laptop();
+    List<Laptop> laptops = await lapct.getLaptopObjects();
     setState(() {
       _laptops = laptops;
       for (var laptop in _laptops) {

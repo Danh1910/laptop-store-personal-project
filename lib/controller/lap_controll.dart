@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../model/DTO/laptop_dto.dart';
 import '../model/service/laptop_service.dart';
 
@@ -7,7 +9,7 @@ class lap_controll{
   void themlaptop(){
 
     final laptopController = laptop_service();
-    final newLaptop = Laptop(name: 'Macbook Pro', brand: 'Apple', price: 12500, image: "macbook.jpg");
+    final newLaptop = Laptop(id: "1",name: 'Samsung Pro', brand: 'Samsung', price: 12500, image: "macbook.jpg");
 
     laptopController.createLaptop(newLaptop);
   }
@@ -58,5 +60,9 @@ class lap_controll{
     }
   }
 
+  Future<List<Laptop>> getLaptopObjects() async {
+    final snapshot = await FirebaseFirestore.instance.collection('laptops').get();
+    return snapshot.docs.map((doc) => Laptop.fromMap(doc.id, doc.data())).toList();
+  }
 
 }

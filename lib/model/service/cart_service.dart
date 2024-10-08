@@ -2,65 +2,85 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:new_laptop_project/model/DTO/cart_dto.dart';
 
 import '../DTO/cart_item_dto.dart';
+import '../DTO/laptop_dto.dart';
 
 class CartService {
   final CollectionReference _carts = FirebaseFirestore.instance.collection('carts');
 
-  Future<void> addToCart(String laptopId, int quantity) async {
+  Future<void> addToCart(Laptop laptop, int quantity) async {
     try {
-      final cartDoc = _carts.doc('cart'); // Document ID cố định là "cart"
+      final cartDoc = _carts.doc('cart');
       final cartSnapshot = await cartDoc.get();
 
       if (cartSnapshot.exists) {
-        // Giỏ hàng đã tồn tại
         final cartData = cartSnapshot.data() as Map<String, dynamic>;
-        final cartItems = cartData['items'] as List;
-        final existingItemIndex = cartItems.indexWhere(
-                (item) =>
-            (item as Map<String, dynamic>)['laptopId'] == laptopId);
+        final cartItems = cartData['items'] as List?;
 
-        if (existingItemIndex != -1) {
-          // Sản phẩm đã tồn tại, tăng số lượng
-          cartItems[existingItemIndex]['quantity'] += quantity;
+        // Kiểm tra cartItems có null không
+        if (cartItems != null) {
+          final existingItemIndex = cartItems.indexWhere(
+                  (item) => (item as Map<String, dynamic>)['laptop']['id'] == laptop.id);
+
+          if (existingItemIndex != -1) {
+            cartItems[existingItemIndex]['quantity'] += quantity;
+          } else {
+            cartItems.add({'laptop': laptop.toMap(), 'quantity': quantity});
+          }
+
+          double newTotalPrice = 0;
+          for (var item in cartItems) {
+            final laptop = Laptop.fromMap((item as Map<String, dynamic>)['laptop']['id'], (item as Map<String, dynamic>)['laptop']);
+            newTotalPrice += laptop.price * (item['quantity'] as int);
+          }
+
+          await cartDoc.update({'items': cartItems, 'totalPrice': newTotalPrice});
         } else {
-          // Sản phẩm chưa tồn tại, thêm mới
-          cartItems.add({'laptopId': laptopId, 'quantity': quantity});
+          // cartItems là null, tạo mới
+          final double initialTotalPrice = laptop.price * quantity; // Khởi tạo giá ban đầu
+          await cartDoc.update({ // Sử dụng update để tạo field items nếu chưa tồn tại
+            'items': FieldValue.arrayUnion([{'laptop': laptop.toMap(), 'quantity': quantity}]),
+            'totalPrice': initialTotalPrice,
+          });
         }
-
-        // Cập nhật giỏ hàng trên Firestore
-        await cartDoc.update({'items': cartItems});
       } else {
         // Giỏ hàng chưa tồn tại, tạo mới
+        final double initialTotalPrice = laptop.price * quantity; // Khởi tạo giá ban đầu
         await cartDoc.set({
           'items': [
-            {'laptopId': laptopId, 'quantity': quantity}
+            {'laptop': laptop.toMap(), 'quantity': quantity}
           ],
-          'totalPrice': 0, // Cập nhật tổng giá sau
+          'totalPrice': initialTotalPrice,
         });
       }
-    }
-      catch (e) {
+    } catch (e) {
       print('Lỗi khi thêm sản phẩm vào giỏ hàng: $e');
     }
   }
 
   Future<Cart?> getCart() async {
     try {
-      final cartDoc = _carts.doc('cart'); // Document IDcố định là "cart"
+      final cartDoc = _carts.doc('cart');
       final cartSnapshot = await cartDoc.get();
 
       if (cartSnapshot.exists) {
-        // Giỏ hàng tồn tại
         final cartData = cartSnapshot.data() as Map<String, dynamic>;
-        final List<CartItem> items= (cartData['items'] as List)
-            .map((item) => CartItem.fromMap(item as Map<String, dynamic>))
-            .toList();
-        final double totalPrice = (cartData['totalPrice'] as int).toDouble();
+        final cartItems = cartData['items'] as List?;
+        // Kiểm tra cartItems có null không
+        if (cartItems != null) {
+          final List<CartItem> items = cartItems
+              .map((item) => CartItem(
+            quantity: (item as Map<String, dynamic>)['quantity'] as int,
+            laptop: Laptop.fromMap((item as Map<String, dynamic>)['laptop']['id'] ?? '', (item as Map<String, dynamic>)['laptop'] ?? {}),
+          ))
+              .toList();
+          final double totalPrice = (cartData['totalPrice'] as num?)?.toDouble() ?? 0.0;
 
-        return Cart(items: items, totalPrice: totalPrice);
+          return Cart(items: items, totalPrice: totalPrice);
+        } else {
+          return Cart(items: [], totalPrice: 0.0); // Trả về giỏ hàng rỗng
+        }
       } else {
-        // Giỏ hàng chưa tồn tại
-        return null;
+        return Cart(items: [], totalPrice: 0.0); // Trả về giỏ hàng rỗng
       }
     } catch (e) {
       print('Lỗi khi lấy giỏ hàng: $e');
