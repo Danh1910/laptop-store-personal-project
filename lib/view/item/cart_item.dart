@@ -40,21 +40,32 @@ class CartItemUI extends StatelessWidget{
                 ),
               ],
             ),
-            Row(
+            Column(
               children: [
-                TextButton(
-                    onPressed: nhan, child: Text("giảm"),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue)
-                  ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: nhan, child: Text("giảm"),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue)
+                      ),
+                    ),
+                    SizedBox(width: 8.0), // Khoảng cách giữa 2 button
+                    TextButton(onPressed: nhan, child: Text("tăng"),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue)
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 8.0), // Khoảng cách giữa 2 button
-                TextButton(onPressed: nhan, child: Text("tăng"),
+                TextButton(onPressed: nhan, child: Text("Xóa"),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue)
-                  ),)
+                  ),
+                ),
               ],
-            ),
+            )
+
           ],
         ),
       ),

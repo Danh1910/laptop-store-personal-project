@@ -4,12 +4,18 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:new_laptop_project/controller/cart_controll.dart';
+import 'package:new_laptop_project/controller/hoadon_controller.dart';
 import 'package:new_laptop_project/view/item/cart_item.dart';
 
+import '../../model/DTO/cart_item_dto.dart';
+import '../../model/DTO/chitiethoadon_dto.dart';
+import '../../model/DTO/hoadon_dto.dart';
 import '../../model/DTO/laptop_dto.dart';
+import '../../model/service/hoadon_service.dart';
 
 class CartView extends StatelessWidget {
   final cartController = Get.put(CartControll());
+  final hoaDonControll = Get.put(hoadonControll());
 
   final laptop = Laptop(
       id: '1',
@@ -30,12 +36,6 @@ class CartView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-              onPressed: () { // Hàm anonymous
-                cartController.addItemToCart(laptop, 1); // Gọi addItemToCart
-              },
-              child: Text("Thêm Cart"),
-            ),
             TextButton(
                 onPressed: () => cartController.getCart(), child: Text("Đọc Cart")),
             Obx(() {
@@ -67,7 +67,14 @@ class CartView extends StatelessWidget {
                               ],
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (cartController.cart != null && cartController.cart!.items.isNotEmpty) {
+                                  final cartItems = cartController.cart!.items;
+                                  hoaDonControll.taoHoaDonVaChiTiet(cartItems);
+                                } else {
+                                  // Xử lý trường hợp giỏ hàng rỗng (ví dụ: hiển thị thông báo)
+                                  print('Giỏ hàng rỗng!');
+                                }},
                               child: Text("Mua"),
                             ),
                           ],
@@ -83,4 +90,6 @@ class CartView extends StatelessWidget {
       ),
     );
   }
+
+
 }

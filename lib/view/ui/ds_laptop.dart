@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:new_laptop_project/model/service/Firebase_service.dart';
 
 import '../../controller/cart_controll.dart';
 import '../../model/DTO/laptop_dto.dart';
@@ -19,13 +20,15 @@ class _DSLaptopState extends State<DSLaptop> {
 
   String? _imageUrl; // Biến state để lưu trữ URL ảnh
   final lapct = Get.put(lap_controll());
+  final firebase_service = Get.put(Firebase_service());
 
   List<Laptop> _laptops = [];
 
   @override
   void initState() {
     super.initState();
-    // _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
+    firebase_service.initializeFirebase();
+    _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
     print("init đã chạy.");
   }
 
@@ -52,7 +55,7 @@ class _DSLaptopState extends State<DSLaptop> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center, // Canh giữa các item
                         children: [
-                          if (_imageUrl != null) Image.network(_imageUrl!),
+                          // if (_imageUrl != null) Image.network(_imageUrl!),
                           if (firstIndex < _laptops.length)
                             Expanded(
                               child: Padding(
@@ -106,6 +109,7 @@ class _DSLaptopState extends State<DSLaptop> {
     }
   }
 }
+
 
 
 

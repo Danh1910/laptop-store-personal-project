@@ -35,7 +35,7 @@ class LaptopDetailsScreen extends StatelessWidget {
             Text(laptop.price.toString()),
             ElevatedButton(
               onPressed: () {
-
+                cartController.addItemToCart(laptop, 1);
               },
               child: const Text('Mua'),
             ),
