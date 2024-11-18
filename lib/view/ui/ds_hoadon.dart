@@ -17,7 +17,7 @@ class _DSHoaDonState extends State<DSHoaDon> {
   void initState() {
     super.initState();
     _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
-    print("init đã chạy.");
+    print("hóa đơn đã chạy.");
   }
 
   @override

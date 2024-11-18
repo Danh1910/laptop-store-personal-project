@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_laptop_project/view/ui/sign_up.dart';
 
 import 'cart_view.dart';
 import 'ds_hoadon.dart';
@@ -14,14 +15,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String dulieu = "";int _selectedIndex = 0;
+  String dulieu = "";
+  int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
     DSLaptop(),
     DSHoaDon(),
-    const Text(
-      'Index 2: School',
-    ),
+    Sign_up(),
   ];
 
   void _onItemTapped(int index) {
