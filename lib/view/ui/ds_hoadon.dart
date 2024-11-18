@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_laptop_project/controller/hoadon_controller.dart';
 import 'package:new_laptop_project/model/DTO/hoadon_dto.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class DSHoaDon extends StatefulWidget {
@@ -90,7 +91,10 @@ class _DSHoaDonState extends State<DSHoaDon> {
   }
 
   Future<void> _docdulieu() async {
-    List<HoaDon> hoaDons = await hoadonControll.readHoaDons();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId;
+    userId = prefs.getString('userId');
+    List<HoaDon> hoaDons = await hoadonControll.readHoaDonsByUserId(userId!);
     setState(() {
       _hoaDons = hoaDons;
     });

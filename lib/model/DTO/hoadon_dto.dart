@@ -6,12 +6,12 @@ import 'laptop_dto.dart';
 
 
 class HoaDon {
-  final String id; // ID hóa đơn
+  String id; // ID hóa đơn
   final DateTime ngayTao; // Ngày tạo hóa đơn
   final ChiTietHoaDon chiTiet; // Chi tiết hóa đơn
 
   HoaDon({
-    required this.id,
+    this.id = '',
     required this.ngayTao,
     required this.chiTiet,
   });
