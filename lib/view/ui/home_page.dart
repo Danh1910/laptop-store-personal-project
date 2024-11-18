@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_laptop_project/view/ui/sign_in.dart';
 import 'package:new_laptop_project/view/ui/sign_up.dart';
 
 import 'cart_view.dart';
@@ -22,6 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
     DSLaptop(),
     DSHoaDon(),
     Sign_up(),
+    Sign_in(),
   ];
 
   void _onItemTapped(int index) {
@@ -63,7 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'Tài khoản',
+            label: 'Đăng ký',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.login),
+            label: 'Đăng nhập',
           ),
         ],
         currentIndex: _selectedIndex,
