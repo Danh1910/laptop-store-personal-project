@@ -6,13 +6,13 @@ import '../model/DTO/laptop_dto.dart';
 import '../model/service/laptop_service.dart';
 
 class lap_controll{
-  void themlaptop(){
-
-    final laptopController = laptop_service();
-    final newLaptop = Laptop(id: "1",name: 'Samsung Pro', brand: 'Samsung', price: 12500, image: "macbook.jpg");
-
-    laptopController.createLaptop(newLaptop);
-  }
+  // void themlaptop(){
+  //
+  //   final laptopController = laptop_service();
+  //   final newLaptop = Laptop(id: "1",name: 'Samsung Pro', brand: 'Samsung', price: 12500, image: "macbook.jpg");
+  //
+  //   laptopController.createLaptop(newLaptop);
+  // }
 
   void docdulieu(){
     final laptopController = laptop_service();

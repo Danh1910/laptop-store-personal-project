@@ -6,6 +6,7 @@ import 'package:new_laptop_project/model/DTO/cart_dto.dart';
 import 'package:new_laptop_project/model/service/cart_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/DTO/cart_item_dto.dart';
 import '../model/DTO/laptop_dto.dart';
 import 'account_controller.dart';
 
@@ -46,6 +47,13 @@ class CartControll extends GetxController{
   Future<void> getCart() async{
     _cart.value = await _cartService.getCart(userId!);
     // print(_accountControll.userId);
+  }
+
+  Future<void> updateCartItemQuantity(CartItem item, int newQuantity) async {
+    // Gọi hàm updateCartItems trong CartService
+    await _cartService.updateCartItems(userId!, item..quantity = newQuantity);
+    // Cập nhật lại giỏ hàng trong controller
+    getCart();
   }
 
 }

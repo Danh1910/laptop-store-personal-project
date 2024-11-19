@@ -20,14 +20,14 @@ class _DSLaptopState extends State<DSLaptop> {
 
   String? _imageUrl; // Biến state để lưu trữ URL ảnh
   final lapct = Get.put(lap_controll());
-  final firebase_service = Get.put(Firebase_service());
+
 
   List<Laptop> _laptops = [];
 
   @override
   void initState() {
     super.initState();
-    firebase_service.initializeFirebase();
+
     _docdulieu(); // Gọi hàm đọc dữ liệu khi widget được khởi tạo
     print("init đã chạy.");
   }
@@ -39,10 +39,6 @@ class _DSLaptopState extends State<DSLaptop> {
         child: SizedBox(height: 650, // Đặt chiều cao mong muốn
           child: Column(
             children: [
-              TextButton(onPressed: lapct.themlaptop, child: Text("Thêm lap")),
-              // TextButton(onPressed: lapct.docdulieu, child: Text("Đọc lap")),
-              TextButton(onPressed: _docdulieu, child: Text("Đọc firebase")),
-                  // TextButton(onPressed: () => getimage("msi.jpg"), child: Text("Lấy ảnh")),
               Expanded(
                 child: ListView.builder(
                   itemCount: (_laptops.length / 2).ceil(),

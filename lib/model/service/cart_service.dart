@@ -97,4 +97,35 @@ class CartService {
     }
   }
 
+  Future<void> updateCartItems(String userId, CartItem updatedItem) async{
+    try {
+      final cartDoc = _carts.doc(userId);
+      final cartSnapshot = await cartDoc.get();
+
+      if (cartSnapshot.exists) {
+        final cartData = cartSnapshot.data() as Map<String, dynamic>;
+        final cartItems = cartData['items'] as List;
+
+        final existingItemIndex = cartItems.indexWhere(
+                (item) => (item as Map<String, dynamic>)['laptop']['id'] == updatedItem.laptop.id);
+
+        if (existingItemIndex != -1) {
+          cartItems[existingItemIndex]['quantity'] = updatedItem.quantity;
+
+          // Tính toán lại tổng giá
+          double newTotalPrice = 0;
+          for (var item in cartItems) {
+            final laptop = Laptop.fromMap((item as Map<String, dynamic>)['laptop']['id'], (item as Map<String, dynamic>)['laptop']);
+            newTotalPrice += laptop.price * (item['quantity'] as int);
+          }
+
+          // Cập nhật giỏ hàng trên Firestore
+          await cartDoc.update({'items': cartItems, 'totalPrice': newTotalPrice});
+        }
+      }
+    } catch (e) {
+      print('Lỗi khi cập nhật giỏ hàng: $e');
+    }
+  }
+
 }

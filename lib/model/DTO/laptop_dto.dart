@@ -3,7 +3,9 @@ class Laptop {
   final String name;
   final String brand;
   final double price;
+  final double original_price;
   final String image;
+
   String? imageUrl;
 
   Laptop(
@@ -12,6 +14,7 @@ class Laptop {
         required this.name,
         required this.brand,
         required this.price,
+        required this.original_price,
         required this.image,
         this.imageUrl,
       }
@@ -35,6 +38,7 @@ class Laptop {
       name: map['name'] ?? '',
       brand: map['brand'] ?? '',
       price: map['price']?.toDouble() ?? 0.0,
+        original_price: map['original_price']?.toDouble() ?? 0.0,
       image: map['image'] ?? '',
       imageUrl: map['imageUrl'] ?? ''
     );
