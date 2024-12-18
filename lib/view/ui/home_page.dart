@@ -19,6 +19,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String dulieu = "";
   int _selectedIndex = 0;
 
+  Widget? widget_temp_dslaptop;
+  Widget? widget_temp_dshd;
+
+  Widget? widget_temp;
+
   static final List<Widget> _widgetOptions = <Widget>[
     DSLaptop(),
     DSHoaDon(),
@@ -29,8 +34,23 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
+      switch (index) {
+        case 0:
+          widget_temp_dslaptop ??= DSLaptop(); // Khởi tạo nếuchưa tồn tại
+          widget_temp = widget_temp_dslaptop!;
+          break;
+        case 1:
+          widget_temp_dshd ??= DSHoaDon(); // Khởi tạo nếu chưa tồn tại
+          widget_temp = widget_temp_dshd!;
+          break;
+        default:
+          widget_temp = _widgetOptions.elementAt(_selectedIndex);
+      }
+
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
